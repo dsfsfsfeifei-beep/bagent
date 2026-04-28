@@ -7,7 +7,7 @@
 
 ## 架构
 
-- LLM：公司内部 OpenAI 兼容接口（`langchain-openai`）
+- LLM：本地 Ollama（OpenAI 兼容端点 `http://localhost:11434/v1`），默认模型 `qwen3.6:35b`，需支持 tool calling
 - Agent：`langgraph.prebuilt.create_react_agent`（ReAct + tool calling）
 - 记忆：`SqliteSaver` checkpointer，按 `thread_id` 隔离（推荐用 `user_id`）
 - 鉴权：每用户独立 token，从 HTTP `Authorization: Bearer ...` 取出，通过 `RunnableConfig.configurable.user_token` 透传给 tool
@@ -26,8 +26,13 @@
 ## 运行
 
 ```bash
+# 1. 起 Ollama 并拉模型
+ollama serve            # 后台跑
+ollama pull qwen3.6:35b # 或你 ollama list 里实际的 tag
+
+# 2. 起 agent
 uv sync
-cp .env.example .env  # 填好 LLM 和各系统 base_url
+cp .env.example .env    # 默认指向 localhost:11434，按需改 base_url
 uv run uvicorn src.server:app --reload --port 8080
 ```
 
