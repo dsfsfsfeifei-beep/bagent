@@ -2,6 +2,9 @@
 
 把这三个文件拷进你们的 Vue 项目（或发成包），然后在外层布局里挂上 `<ChatWidget>`。
 
+> 针对 `cloud-mdm-front` 项目的具体落地步骤（store / actions / 业务组件改动点）见
+> [integration-mdm-front.md](./integration-mdm-front.md)。
+
 ## 文件
 
 - `bagent.ts` — `useBagent()` composable：建 WebSocket、处理消息、把 UI action 派发到 handler。
